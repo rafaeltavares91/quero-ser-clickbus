@@ -30,4 +30,13 @@ public class PlaceService {
         return mapper.map(placeRepository.save(place), PlaceDTO.class);
     }
 
+    public PlaceDTO findById(Long id) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        return mapper.map(placeRepository
+                .findById(id)
+                .orElseThrow(ResourceNotFoundException::new),
+                PlaceDTO.class);
+    }
 }

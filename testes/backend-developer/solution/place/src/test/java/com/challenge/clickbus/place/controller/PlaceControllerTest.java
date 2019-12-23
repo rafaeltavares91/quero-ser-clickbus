@@ -33,13 +33,30 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
 
     private MockMvc mockMvc;
 
-    private CreatePlaceDTO createPlaceDTOWithValidFields = CreatePlaceDTO.builder()
-            .name("Faria Lima")
-            .cityId(1l)
-            .build();
+    private PlaceDTO placeDTO;
+    private CreatePlaceDTO createPlaceDTO;
 
     @Before
     public void setUp() {
+        placeDTO = PlaceDTO.builder()
+                .id(1l)
+                .name("Faria Lima")
+                .city(CityDTO.builder()
+                        .id(1l)
+                        .name("São Paulo")
+                        .state(StateDTO.builder()
+                                .id(1l)
+                                .name("São Paulo")
+                                .abbreviation("SP")
+                                .build())
+                        .build())
+                .build();
+
+        createPlaceDTO = CreatePlaceDTO.builder()
+                .name("Faria Lima")
+                .cityId(1l)
+                .build();
+
         MockitoAnnotations.initMocks(this);
 
         mockMvc = MockMvcBuilders
@@ -59,40 +76,53 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void createPlaceStatusNotFound() throws Exception {
-        when(placeController.createPayment(any())).thenThrow(ResourceNotFoundException.class);
+    public void createPlaceNotFound() throws Exception {
+        when(placeController.createPlace(any())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(post(PlaceController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(createPlaceDTOWithValidFields)))
+                .content(asJsonString(createPlaceDTO)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", equalTo("Resource Not Found")));
     }
 
     @Test
     public void createPlace() throws Exception {
-        PlaceDTO placeDTO = PlaceDTO.builder()
-                .id(1l)
-                .name("Faria Lima")
-                .city(CityDTO.builder()
-                        .id(1l)
-                        .name("São Paulo")
-                        .state(StateDTO.builder()
-                                .id(1l)
-                                .name("São Paulo")
-                                .abbreviation("SP")
-                                .build())
-                        .build())
-                .build();
-
         when(placeService.create(any())).thenReturn(placeDTO);
 
         mockMvc.perform(post(PlaceController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(createPlaceDTOWithValidFields)))
+                .content(asJsonString(createPlaceDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", equalTo(1)))
-                .andExpect(jsonPath("$.name", equalTo("Faria Lima")));
+                .andExpect(jsonPath("$.name", equalTo("Faria Lima")))
+                .andExpect(jsonPath("$.city.id", equalTo(1)))
+                .andExpect(jsonPath("$.city.name", equalTo("São Paulo")));
+    }
+
+    @Test
+    public void getPlaceByIdNotFound() throws Exception {
+        when(placeService.findById(any())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get(PlaceController.BASE_URL.concat("/1"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", equalTo("Resource Not Found")));
+    }
+
+    @Test
+    public void getPlaceById() throws Exception {
+        when(placeService.findById(any())).thenReturn(placeDTO);
+
+        mockMvc.perform(get(PlaceController.BASE_URL.concat("/1"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", equalTo(1)))
+                .andExpect(jsonPath("$.name", equalTo("Faria Lima")))
+                .andExpect(jsonPath("$.city.id", equalTo(1)))
+                .andExpect(jsonPath("$.city.name", equalTo("São Paulo")))
+                .andExpect(jsonPath("$.city.state.id", equalTo(1)))
+                .andExpect(jsonPath("$.city.state.abbreviation", equalTo("SP")));
     }
 
 }

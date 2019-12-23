@@ -21,8 +21,14 @@ public class PlaceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PlaceDTO createPayment(@Valid @RequestBody CreatePlaceDTO placeDTO) {
+    public PlaceDTO createPlace(@Valid @RequestBody CreatePlaceDTO placeDTO) {
         return placeService.create(placeDTO);
+    }
+
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PlaceDTO getPlaceById(@PathVariable("id") Long id) {
+        return placeService.findById(id);
     }
 
 }
