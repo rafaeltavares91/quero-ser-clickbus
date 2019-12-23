@@ -19,6 +19,7 @@
 		<org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
 		<springfox.version>2.7.0</springfox.version>
 		<modelmapper.version>2.0.0</modelmapper.version>
+		<guava.jre.version>28.1-jre</guava.jre.version>
 	</properties>
 
 	<dependencies>
@@ -55,7 +56,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>28.1-jre</version>
+			<version>${guava.jre.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -76,12 +77,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 

@@ -1,4 +1,4 @@
-package com.challenge.clickbus.place.repo;
+package com.challenge.clickbus.place.repository;
 
 import com.challenge.clickbus.place.domain.City;
 import org.springframework.data.repository.CrudRepository;

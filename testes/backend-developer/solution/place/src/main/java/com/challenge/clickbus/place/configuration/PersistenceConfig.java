@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"com.challenge.clickbus.place.repo"})
+@EnableJpaRepositories(basePackages = {"com.challenge.clickbus.place.repository"})
 @EnableJpaAuditing
 @EntityScan(basePackages = {"com.challenge.clickbus.place.domain"})
 public class PersistenceConfig {

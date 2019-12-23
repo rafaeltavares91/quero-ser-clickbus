@@ -2,21 +2,18 @@ package com.challenge.clickbus.place.dbinitializr;
 
 import com.challenge.clickbus.place.domain.City;
 import com.challenge.clickbus.place.domain.State;
-import com.challenge.clickbus.place.repo.CityRepository;
-import com.challenge.clickbus.place.repo.StateRepository;
+import com.challenge.clickbus.place.repository.CityRepository;
+import com.challenge.clickbus.place.repository.StateRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class DataLoader implements CommandLineRunner {
 
     private final StateRepository stateRepository;
     private final CityRepository cityRepository;
-
-    public DataLoader(StateRepository stateRepository, CityRepository cityRepository) {
-        this.stateRepository = stateRepository;
-        this.cityRepository = cityRepository;
-    }
 
     @Override
     public void run(String... args) {
