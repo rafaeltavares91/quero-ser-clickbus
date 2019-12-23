@@ -8,8 +8,9 @@ import com.challenge.clickbus.place.repository.CityRepository;
 import com.challenge.clickbus.place.repository.PlaceRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
+
+import static com.challenge.clickbus.place.util.ModelMapperHelper.MODELMAPPER_HELPER;
 
 @Service
 @AllArgsConstructor
@@ -18,41 +19,37 @@ public class PlaceService {
     private final PlaceRepository placeRepository;
     private final CityRepository cityRepository;
 
-    public PlaceDTO create(CreateUpdatePlaceDTO ceateUpdatePlaceDTO) {
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        Place place = mapper.map(ceateUpdatePlaceDTO, Place.class);
+    public PlaceDTO create(CreateUpdatePlaceDTO createUpdatePlaceDTO) {
+        ModelMapper mapper = MODELMAPPER_HELPER.getInstance();
 
+        Place place = mapper.map(createUpdatePlaceDTO, Place.class);
         place.setCity(cityRepository
-                .findById(ceateUpdatePlaceDTO.getCityId())
+                .findById(createUpdatePlaceDTO.getCityId())
                 .orElseThrow(ResourceNotFoundException::new));
 
         return mapper.map(placeRepository.save(place), PlaceDTO.class);
     }
 
-    public PlaceDTO updatePlace(Long id, CreateUpdatePlaceDTO ceateUpdatePlaceDTO) {
+    public PlaceDTO updatePlace(Long id, CreateUpdatePlaceDTO createUpdatePlaceDTO) {
         Place place = placeRepository
                 .findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
-
-        place.setName(ceateUpdatePlaceDTO.getName());
-        place.setSlug(ceateUpdatePlaceDTO.getSlug());
+        place.setName(createUpdatePlaceDTO.getName());
         place.setCity(cityRepository
                 .findById(id)
                 .orElseThrow(ResourceNotFoundException::new));
 
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        return mapper.map(placeRepository.save(place), PlaceDTO.class);
+        return MODELMAPPER_HELPER.getInstance().map(
+                placeRepository.save(place),
+                PlaceDTO.class);
     }
 
     public PlaceDTO findById(Long id) {
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-
-        return mapper.map(placeRepository
+        return MODELMAPPER_HELPER.getInstance().map(
+                placeRepository
                         .findById(id)
                         .orElseThrow(ResourceNotFoundException::new),
                 PlaceDTO.class);
     }
+
 }
