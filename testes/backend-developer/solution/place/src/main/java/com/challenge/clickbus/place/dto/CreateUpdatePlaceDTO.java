@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreatePlaceDTO {
+public class CreateUpdatePlaceDTO {
 
     @NotNull
     private String name;

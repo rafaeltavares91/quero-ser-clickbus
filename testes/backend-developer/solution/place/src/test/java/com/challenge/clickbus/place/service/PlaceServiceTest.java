@@ -2,7 +2,7 @@ package com.challenge.clickbus.place.service;
 
 import com.challenge.clickbus.place.domain.City;
 import com.challenge.clickbus.place.domain.Place;
-import com.challenge.clickbus.place.dto.CreatePlaceDTO;
+import com.challenge.clickbus.place.dto.CreateUpdatePlaceDTO;
 import com.challenge.clickbus.place.dto.PlaceDTO;
 import com.challenge.clickbus.place.exception.ResourceNotFoundException;
 import com.challenge.clickbus.place.repository.CityRepository;
@@ -46,7 +46,7 @@ public class PlaceServiceTest {
     public void createPlaceThrowsResourceNotFoundException()  {
         when(cityRepository.findById(anyLong())).thenThrow(ResourceNotFoundException.class);
 
-        placeService.create(CreatePlaceDTO.builder().name("Faria Lima").cityId(1L).build());
+        placeService.create(CreateUpdatePlaceDTO.builder().name("Faria Lima").cityId(1L).build());
     }
 
     @Test
@@ -54,11 +54,34 @@ public class PlaceServiceTest {
         when(placeRepository.save(any())).thenReturn(place);
         when(cityRepository.findById(anyLong())).thenReturn(Optional.of(city));
 
-        PlaceDTO returnedPlace = placeService.create(CreatePlaceDTO.builder().name("Faria Lima").cityId(1L).build());
+        PlaceDTO returnedPlace = placeService.create(CreateUpdatePlaceDTO.builder().name("Faria Lima").cityId(1L).build());
 
         assertEquals(1L, returnedPlace.getId().longValue());
         assertEquals("Faria Lima", returnedPlace.getName());
         assertEquals("São Paulo", returnedPlace.getCity().getName());
+        verify(cityRepository, times(1)).findById(anyLong());
+        verify(placeRepository, times(1)).save(any(Place.class));
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void updatePlaceThrowsResourceNotFoundException()  {
+        when(placeRepository.findById(anyLong())).thenThrow(ResourceNotFoundException.class);
+
+        placeService.updatePlace(1L, CreateUpdatePlaceDTO.builder().name("Faria Lima").cityId(1L).build());
+    }
+
+    @Test
+    public void updatePlace() {
+        when(placeRepository.findById(anyLong())).thenReturn(Optional.of(place));
+        when(cityRepository.findById(anyLong())).thenReturn(Optional.of(city));
+        when(placeRepository.save(any())).thenReturn(place);
+
+        PlaceDTO returnedPlace = placeService.updatePlace(1L, CreateUpdatePlaceDTO.builder().name("Berrini").cityId(1L).build());
+
+        assertEquals(1L, returnedPlace.getId().longValue());
+        assertEquals("Berrini", returnedPlace.getName());
+        assertEquals("São Paulo", returnedPlace.getCity().getName());
+        verify(placeRepository, times(1)).findById(anyLong());
         verify(cityRepository, times(1)).findById(anyLong());
         verify(placeRepository, times(1)).save(any(Place.class));
     }
@@ -72,7 +95,7 @@ public class PlaceServiceTest {
 
     @Test
     public void findById() {
-        when(placeRepository.findById(any())).thenReturn(Optional.of(place));
+        when(placeRepository.findById(anyLong())).thenReturn(Optional.of(place));
 
         PlaceDTO returnedPlace = placeService.findById(1L);
 

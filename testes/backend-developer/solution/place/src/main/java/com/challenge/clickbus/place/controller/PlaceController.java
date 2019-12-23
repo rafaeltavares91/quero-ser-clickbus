@@ -1,6 +1,6 @@
 package com.challenge.clickbus.place.controller;
 
-import com.challenge.clickbus.place.dto.CreatePlaceDTO;
+import com.challenge.clickbus.place.dto.CreateUpdatePlaceDTO;
 import com.challenge.clickbus.place.dto.PlaceDTO;
 import com.challenge.clickbus.place.service.PlaceService;
 import lombok.AllArgsConstructor;
@@ -21,8 +21,14 @@ public class PlaceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PlaceDTO createPlace(@Valid @RequestBody CreatePlaceDTO placeDTO) {
+    public PlaceDTO createPlace(@Valid @RequestBody CreateUpdatePlaceDTO placeDTO) {
         return placeService.create(placeDTO);
+    }
+
+    @PutMapping({"/{id}"})
+    @ResponseStatus(HttpStatus.OK)
+    public PlaceDTO updatePlace(@PathVariable Long id, @Valid @RequestBody CreateUpdatePlaceDTO placeDTO) {
+        return placeService.updatePlace(id, placeDTO);
     }
 
     @GetMapping(path = "/{id}")

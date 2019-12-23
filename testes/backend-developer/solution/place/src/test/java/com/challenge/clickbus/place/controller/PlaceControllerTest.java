@@ -2,14 +2,16 @@ package com.challenge.clickbus.place.controller;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.challenge.clickbus.place.dto.CityDTO;
-import com.challenge.clickbus.place.dto.CreatePlaceDTO;
+import com.challenge.clickbus.place.dto.CreateUpdatePlaceDTO;
 import com.challenge.clickbus.place.dto.PlaceDTO;
 import com.challenge.clickbus.place.dto.StateDTO;
 import com.challenge.clickbus.place.exception.ResourceNotFoundException;
@@ -34,7 +36,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
     private MockMvc mockMvc;
 
     private PlaceDTO placeDTO;
-    private CreatePlaceDTO createPlaceDTO;
+    private CreateUpdatePlaceDTO createUpdatePlaceDTO;
 
     @Before
     public void setUp() {
@@ -52,7 +54,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
                         .build())
                 .build();
 
-        createPlaceDTO = CreatePlaceDTO.builder()
+        createUpdatePlaceDTO = CreateUpdatePlaceDTO.builder()
                 .name("Faria Lima")
                 .cityId(1l)
                 .build();
@@ -67,7 +69,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void createPlaceBadRequest() throws Exception {
-        CreatePlaceDTO placeDTOWithoutRequiredFields = CreatePlaceDTO.builder().build();
+        CreateUpdatePlaceDTO placeDTOWithoutRequiredFields = CreateUpdatePlaceDTO.builder().build();
 
         mockMvc.perform(post(PlaceController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -81,7 +83,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
 
         mockMvc.perform(post(PlaceController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(createPlaceDTO)))
+                .content(asJsonString(createUpdatePlaceDTO)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", equalTo("Resource Not Found")));
     }
@@ -92,8 +94,43 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
 
         mockMvc.perform(post(PlaceController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(createPlaceDTO)))
+                .content(asJsonString(createUpdatePlaceDTO)))
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id", equalTo(1)))
+                .andExpect(jsonPath("$.name", equalTo("Faria Lima")))
+                .andExpect(jsonPath("$.city.id", equalTo(1)))
+                .andExpect(jsonPath("$.city.name", equalTo("São Paulo")));
+    }
+
+    @Test
+    public void updatePlaceBadRequest() throws Exception {
+        CreateUpdatePlaceDTO placeDTOWithoutRequiredFields = CreateUpdatePlaceDTO.builder().build();
+
+        mockMvc.perform(put(PlaceController.BASE_URL.concat("/1"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(placeDTOWithoutRequiredFields)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void updatePlaceNotFound() throws Exception {
+        when(placeController.updatePlace(anyLong(), any())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(put(PlaceController.BASE_URL.concat("/1"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(createUpdatePlaceDTO)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", equalTo("Resource Not Found")));
+    }
+
+    @Test
+    public void updatePlace() throws Exception {
+        when(placeService.updatePlace(anyLong(), any())).thenReturn(placeDTO);
+
+        mockMvc.perform(put(PlaceController.BASE_URL.concat("/1"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(createUpdatePlaceDTO)))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(1)))
                 .andExpect(jsonPath("$.name", equalTo("Faria Lima")))
                 .andExpect(jsonPath("$.city.id", equalTo(1)))
