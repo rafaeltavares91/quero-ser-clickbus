@@ -20,6 +20,7 @@
 		<springfox.version>2.7.0</springfox.version>
 		<modelmapper.version>2.0.0</modelmapper.version>
 		<guava.jre.version>28.1-jre</guava.jre.version>
+		<slugify.version>2.4</slugify.version>
 	</properties>
 
 	<dependencies>
@@ -77,6 +78,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.slugify</groupId>
+			<artifactId>slugify</artifactId>
+			<version>${slugify.version}</version>
 		</dependency>
 	</dependencies>
 

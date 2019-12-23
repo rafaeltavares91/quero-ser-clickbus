@@ -34,8 +34,17 @@ public class PlaceServiceTest {
 
     @Before
     public void setUp() {
-        city = City.builder().id(1L).name("São Paulo").build();
-        place = Place.builder().id(1L).name("Faria Lima").city(city).build();
+        city = City.builder()
+                .id(1L)
+                .name("São Paulo")
+                .build();
+
+        place = Place.builder()
+                .id(1L)
+                .name("Faria Lima")
+                .slug("faria-lima")
+                .city(city)
+                .build();
 
         MockitoAnnotations.initMocks(this);
 
@@ -58,6 +67,7 @@ public class PlaceServiceTest {
 
         assertEquals(1L, returnedPlace.getId().longValue());
         assertEquals("Faria Lima", returnedPlace.getName());
+        assertEquals("faria-lima", returnedPlace.getSlug());
         assertEquals("São Paulo", returnedPlace.getCity().getName());
         verify(cityRepository, times(1)).findById(anyLong());
         verify(placeRepository, times(1)).save(any(Place.class));
@@ -80,6 +90,7 @@ public class PlaceServiceTest {
 
         assertEquals(1L, returnedPlace.getId().longValue());
         assertEquals("Berrini", returnedPlace.getName());
+        assertEquals("berrini", returnedPlace.getSlug());
         assertEquals("São Paulo", returnedPlace.getCity().getName());
         verify(placeRepository, times(1)).findById(anyLong());
         verify(cityRepository, times(1)).findById(anyLong());
@@ -101,6 +112,7 @@ public class PlaceServiceTest {
 
         assertEquals(1L, returnedPlace.getId().longValue());
         assertEquals("Faria Lima", returnedPlace.getName());
+        assertEquals("faria-lima", returnedPlace.getSlug());
         assertEquals("São Paulo", returnedPlace.getCity().getName());
         verify(placeRepository, times(1)).findById(anyLong());
     }

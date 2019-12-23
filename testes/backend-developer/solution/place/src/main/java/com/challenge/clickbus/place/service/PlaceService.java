@@ -6,6 +6,7 @@ import com.challenge.clickbus.place.dto.PlaceDTO;
 import com.challenge.clickbus.place.exception.ResourceNotFoundException;
 import com.challenge.clickbus.place.repository.CityRepository;
 import com.challenge.clickbus.place.repository.PlaceRepository;
+import com.github.slugify.Slugify;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import static com.challenge.clickbus.place.util.ModelMapperHelper.MODELMAPPER_HE
 @AllArgsConstructor
 public class PlaceService {
 
+    private final Slugify slugify = new Slugify();
+
     private final PlaceRepository placeRepository;
     private final CityRepository cityRepository;
 
@@ -23,6 +26,7 @@ public class PlaceService {
         ModelMapper mapper = MODELMAPPER_HELPER.getInstance();
 
         Place place = mapper.map(createUpdatePlaceDTO, Place.class);
+        place.setSlug(slugify.slugify(place.getName()));
         place.setCity(cityRepository
                 .findById(createUpdatePlaceDTO.getCityId())
                 .orElseThrow(ResourceNotFoundException::new));
@@ -35,6 +39,7 @@ public class PlaceService {
                 .findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
         place.setName(createUpdatePlaceDTO.getName());
+        place.setSlug(slugify.slugify(place.getName()));
         place.setCity(cityRepository
                 .findById(id)
                 .orElseThrow(ResourceNotFoundException::new));

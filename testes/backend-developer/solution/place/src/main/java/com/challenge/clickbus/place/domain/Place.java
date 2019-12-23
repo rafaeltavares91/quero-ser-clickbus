@@ -30,6 +30,7 @@ public class Place implements Comparable<Place> {
     @NotNull
     private String name;
 
+    @NotNull
     private String slug;
 
     @ManyToOne

@@ -43,6 +43,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
         placeDTO = PlaceDTO.builder()
                 .id(1l)
                 .name("Faria Lima")
+                .slug("faria-lima")
                 .city(CityDTO.builder()
                         .id(1l)
                         .name("São Paulo")
@@ -98,6 +99,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", equalTo(1)))
                 .andExpect(jsonPath("$.name", equalTo("Faria Lima")))
+                .andExpect(jsonPath("$.slug", equalTo("faria-lima")))
                 .andExpect(jsonPath("$.city.id", equalTo(1)))
                 .andExpect(jsonPath("$.city.name", equalTo("São Paulo")));
     }
@@ -133,6 +135,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(1)))
                 .andExpect(jsonPath("$.name", equalTo("Faria Lima")))
+                .andExpect(jsonPath("$.slug", equalTo("faria-lima")))
                 .andExpect(jsonPath("$.city.id", equalTo(1)))
                 .andExpect(jsonPath("$.city.name", equalTo("São Paulo")));
     }
@@ -156,6 +159,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(1)))
                 .andExpect(jsonPath("$.name", equalTo("Faria Lima")))
+                .andExpect(jsonPath("$.slug", equalTo("faria-lima")))
                 .andExpect(jsonPath("$.city.id", equalTo(1)))
                 .andExpect(jsonPath("$.city.name", equalTo("São Paulo")))
                 .andExpect(jsonPath("$.city.state.id", equalTo(1)))

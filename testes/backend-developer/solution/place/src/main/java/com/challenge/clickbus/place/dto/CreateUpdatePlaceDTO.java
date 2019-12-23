@@ -16,8 +16,6 @@ public class CreateUpdatePlaceDTO {
     @NotNull
     private String name;
 
-    private String slug;
-
     @NotNull
     private Long cityId;
 
