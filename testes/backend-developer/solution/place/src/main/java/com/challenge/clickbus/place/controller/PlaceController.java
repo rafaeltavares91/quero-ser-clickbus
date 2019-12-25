@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 
 @AllArgsConstructor
@@ -25,16 +27,22 @@ public class PlaceController {
         return placeService.create(placeDTO);
     }
 
-    @PutMapping({"/{id}"})
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PlaceDTO updatePlace(@PathVariable Long id, @Valid @RequestBody CreateUpdatePlaceDTO placeDTO) {
         return placeService.updatePlace(id, placeDTO);
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PlaceDTO getPlaceById(@PathVariable("id") Long id) {
         return placeService.findById(id);
+    }
+
+    @GetMapping({"/list","list/{name}"})
+    @ResponseStatus(HttpStatus.OK)
+    public List<PlaceDTO> getPlaces(@PathVariable("name") Optional<String> name) {
+        return placeService.findByName(name);
     }
 
 }

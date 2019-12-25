@@ -9,7 +9,12 @@ import com.challenge.clickbus.place.repository.PlaceRepository;
 import com.github.slugify.Slugify;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Optional;
 
 import static com.challenge.clickbus.place.util.ModelMapperHelper.MODELMAPPER_HELPER;
 
@@ -57,4 +62,12 @@ public class PlaceService {
                 PlaceDTO.class);
     }
 
+    public List<PlaceDTO> findByName(Optional<String> name) {
+        ModelMapper mapper = MODELMAPPER_HELPER.getInstance();
+        Type targetType = new TypeToken<List<PlaceDTO>>(){}.getType();
+        if(name.isPresent()) {
+            return mapper.map(placeRepository.findByName(name.get()), targetType);
+        }
+        return mapper.map(placeRepository.findAll(), targetType);
+    }
 }

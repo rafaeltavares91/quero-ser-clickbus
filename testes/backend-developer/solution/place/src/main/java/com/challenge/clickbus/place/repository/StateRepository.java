@@ -1,9 +1,9 @@
 package com.challenge.clickbus.place.repository;
 
 import com.challenge.clickbus.place.domain.State;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StateRepository extends CrudRepository<State, Long> {
+public interface StateRepository extends JpaRepository<State, Long> {
 }

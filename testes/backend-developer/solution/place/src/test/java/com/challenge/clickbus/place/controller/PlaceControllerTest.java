@@ -16,6 +16,7 @@ import com.challenge.clickbus.place.dto.PlaceDTO;
 import com.challenge.clickbus.place.dto.StateDTO;
 import com.challenge.clickbus.place.exception.ResourceNotFoundException;
 import com.challenge.clickbus.place.service.PlaceService;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -164,6 +165,34 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
                 .andExpect(jsonPath("$.city.name", equalTo("São Paulo")))
                 .andExpect(jsonPath("$.city.state.id", equalTo(1)))
                 .andExpect(jsonPath("$.city.state.abbreviation", equalTo("SP")));
+    }
+
+    @Test
+    public void getPlaces() throws Exception {
+        when(placeService.findByName(any())).thenReturn(Lists.newArrayList(placeDTO));
+
+        mockMvc.perform(get(PlaceController.BASE_URL.concat("/list"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.[0].name", equalTo("Faria Lima")))
+                .andExpect(jsonPath("$.[0].slug", equalTo("faria-lima")))
+                .andExpect(jsonPath("$.[0].city.id", equalTo(1)))
+                .andExpect(jsonPath("$.[0].city.name", equalTo("São Paulo")));
+    }
+
+    @Test
+    public void getPlacesWithName() throws Exception {
+        when(placeService.findByName(any())).thenReturn(Lists.newArrayList(placeDTO));
+
+        mockMvc.perform(get(PlaceController.BASE_URL.concat("/list/Faria Lima"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.[0].name", equalTo("Faria Lima")))
+                .andExpect(jsonPath("$.[0].slug", equalTo("faria-lima")))
+                .andExpect(jsonPath("$.[0].city.id", equalTo(1)))
+                .andExpect(jsonPath("$.[0].city.name", equalTo("São Paulo")));
     }
 
 }

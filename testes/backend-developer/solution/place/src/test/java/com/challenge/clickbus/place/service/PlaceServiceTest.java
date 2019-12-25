@@ -7,10 +7,13 @@ import com.challenge.clickbus.place.dto.PlaceDTO;
 import com.challenge.clickbus.place.exception.ResourceNotFoundException;
 import com.challenge.clickbus.place.repository.CityRepository;
 import com.challenge.clickbus.place.repository.PlaceRepository;
+import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -115,6 +118,34 @@ public class PlaceServiceTest {
         assertEquals("faria-lima", returnedPlace.getSlug());
         assertEquals("São Paulo", returnedPlace.getCity().getName());
         verify(placeRepository, times(1)).findById(anyLong());
+    }
+
+    @Test
+    public void findByName() {
+        when(placeRepository.findAll()).thenReturn(Lists.newArrayList(place));
+
+        List<PlaceDTO> places = placeService.findByName(Optional.ofNullable(null));
+        PlaceDTO firstPlace = places.get(0);
+
+        assertEquals(places.size(), 1);
+        assertEquals(1L, firstPlace.getId().longValue());
+        assertEquals("Faria Lima", firstPlace.getName());
+        verify(placeRepository, times(1)).findAll();
+        verify(placeRepository, times(0)).findByName(anyString());
+    }
+
+    @Test
+    public void findByNameWithValue() {
+        when(placeRepository.findByName(anyString())).thenReturn(Lists.newArrayList(place));
+
+        List<PlaceDTO> places = placeService.findByName(Optional.ofNullable("Faria Lima"));
+        PlaceDTO firstPlace = places.get(0);
+
+        assertEquals(places.size(), 1);
+        assertEquals(1L, firstPlace.getId().longValue());
+        assertEquals("Faria Lima", firstPlace.getName());
+        verify(placeRepository, times(0)).findAll();
+        verify(placeRepository, times(1)).findByName(any());
     }
 
 }
