@@ -64,7 +64,7 @@ In order to run the tests, go to **/quero-ser-clickbus/testes/backend-developer/
 ## How to use the API
 Once the project is running, we can check swagger services documentation with the link bellow: **[Swagger endpoints documentation](http://localhost:8080/swagger-ui.html)**.
 
-Here I have a **[Postman Collection](https://github.com/rafaeltavares91/quero-ser-clickbus/blob/master/testes/backend-developer/solution/place/src/main/resources/static/ClickBusChallenge.postman_collection.json)** that you can use to validate the endpoints.
+Here I have a **[Postman Collection](https://github.com/rafaeltavares91/quero-ser-clickbus/blob/master/testes/backend-developer/solution/place/src/main/resources/static/ClickBusChallenge.postman_collection.json)** that you can use to validate the endpoints. To use it, copy this file and paste it on **[Postman](https://www.getpostman.com/)**.
 
 ### Available Routes 
 
