@@ -1,4 +1,5 @@
-:bus: An API that manage places. This application was developed as part of ClickBus’s selective process.:bus:
+# ClickBus Challenge
+### :bus: An API that manage places. This application was developed as part of ClickBus’s selective process.:bus:
 
 ## Table of Contents
 - [Introduction](#introduction)
