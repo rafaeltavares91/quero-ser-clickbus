@@ -1,4 +1,4 @@
-An API that manage places. This application was developed as part of ClickBus's selective process.
+:bus: An API that manage places. This application was developed as part of ClickBus’s selective process.:bus:
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -7,7 +7,7 @@ An API that manage places. This application was developed as part of ClickBus's 
   - [Getting Started](#getting-started)
   - [Running the Application](#running-the-application)
   - [Running the Tests](#running-the-tests)
-- [The Checkout and How to use the API](#the-checkout-and-how-to-use-the-api)
+- [How to use the API](#how-to-use-the-api)
   - [Available Routes](#available-routes)  
   
 ## Introduction
@@ -65,7 +65,7 @@ Once the project is running, we can check swagger services documentation with th
 
 Here I have a **[Postman Collection](https://github.com/rafaeltavares91/quero-ser-clickbus/blob/master/testes/backend-developer/solution/place/src/main/resources/static/ClickBusChallenge.postman_collection.json)** that you can use to validate the endpoints.
 
-## Available Routes 
+### Available Routes 
 
 | Routes                 | Description                      | HTTP Methods |
 |------------------------|----------------------------------|--------------|
