@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/rafaeltavares91/quero-ser-clickbus/tree/master/testes/backend-developer/solution/place/src/main/resources/static/clickbuschallenge.png">
+  <img src="https://github.com/rafaeltavares91/quero-ser-clickbus/blob/master/src/main/resources/static/clickbuschallenge.png">
   </br>
   An API that manage places. This application was developed as part of ClickBus's selective process.
 </p>
