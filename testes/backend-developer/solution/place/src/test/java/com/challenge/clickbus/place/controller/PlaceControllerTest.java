@@ -81,7 +81,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void createPlaceNotFound() throws Exception {
-        when(placeController.createPlace(any())).thenThrow(ResourceNotFoundException.class);
+        when(placeService.create(any())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(post(PlaceController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -117,7 +117,7 @@ public class PlaceControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void updatePlaceNotFound() throws Exception {
-        when(placeController.updatePlace(anyLong(), any())).thenThrow(ResourceNotFoundException.class);
+        when(placeService.updatePlace(anyLong(), any())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(put(PlaceController.BASE_URL.concat("/1"))
                 .contentType(MediaType.APPLICATION_JSON)
