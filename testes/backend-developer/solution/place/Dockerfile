@@ -1,4 +1,4 @@
 FROM openjdk:8-jdk-alpine
-EXPOSE 8080
-ENTRYPOINT ["java"]
-CMD ["-jar", "/app.jar"]
+VOLUME /tmp
+COPY target/place-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
