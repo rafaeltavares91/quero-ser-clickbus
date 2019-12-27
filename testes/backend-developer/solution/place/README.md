@@ -16,8 +16,8 @@ An API that manage places: it allows to create, edit and get a specific place. A
 
 Some premises of the challenge:
 - All API responses are JSON.
-- The code was made using TDD and therefore are several unit tests. An integration test was included also.
-- I followed the SOLID principles.
+- The code was made using TDD and therefore are several unit tests.
+- I followed the SOLID, Effective Java, Clean Code and other good practices.
 
 ## Technologies
 What was used:
@@ -43,18 +43,19 @@ $ git clone https://github.com/rafaeltavares91/quero-ser-clickbus.git
 ```
 In your JAVA IDE, import the application as a maven project. Just for reference, this project was developed using **[IntelliJ IDEA](https://www.jetbrains.com/idea/)**.
 
+PS.: That the project is in the following directory:
+```
+quero-ser-clickbus⁩ ▸ ⁨testes⁩ ▸ ⁨backend-developer⁩ ▸ ⁨solution⁩ ▸ ⁨place⁩
+```
+
 ### Running the Application
-Build the project image:
+Build the PostgreSQL image:
 ```
-$ docker-compose build
-```
-Then build the project using maven:
-```
-$  mvn clean install
+$ docker-compose up --build
 ```
 After that, run the application:
 ```
-$ docker-compose up
+$ mvn spring-boot:run
 ```
 And you're already good to go!
 
