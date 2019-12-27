@@ -43,7 +43,7 @@ $ git clone https://github.com/rafaeltavares91/quero-ser-clickbus.git
 ```
 In your JAVA IDE, import the application as a maven project. Just for reference, this project was developed using **[IntelliJ IDEA](https://www.jetbrains.com/idea/)**.
 
-PS.: That the project is in the following directory:
+PS.: The project is in the following directory:
 ```
 quero-ser-clickbus⁩ ▸ ⁨testes⁩ ▸ ⁨backend-developer⁩ ▸ ⁨solution⁩ ▸ ⁨place⁩
 ```
