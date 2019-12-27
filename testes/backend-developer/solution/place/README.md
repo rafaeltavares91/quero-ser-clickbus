@@ -1,8 +1,6 @@
-<p align="center">
-  <img src="https://github.com/rafaeltavares91/quero-ser-clickbus/tree/master/testes/backend-developer/solution/place/src/main/resources/static/clickbuschallenge.png">
-  </br>
-  An API that manage places. This application was developed as part of ClickBus's selective process.
-</p>
+# ClickBus Challenge
+#### :bus: An API that manage places. This application was developed as part of ClickBus’s selective process.:bus:
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Technologies](#technologies)
@@ -10,7 +8,7 @@
   - [Getting Started](#getting-started)
   - [Running the Application](#running-the-application)
   - [Running the Tests](#running-the-tests)
-- [The Checkout and How to use the API](#the-checkout-and-how-to-use-the-api)
+- [How to use the API](#how-to-use-the-api)
   - [Available Routes](#available-routes)  
   
 ## Introduction
@@ -66,9 +64,9 @@ In order to run the tests, go to **/quero-ser-clickbus/testes/backend-developer/
 ## How to use the API
 Once the project is running, we can check swagger services documentation with the link bellow: **[Swagger endpoints documentation](http://localhost:8080/swagger-ui.html)**.
 
-Here I have a **[Postman Collection](https://github.com/rafaeltavares91/quero-ser-clickbus/blob/master/testes/backend-developer/solution/place/src/main/resources/static/ClickBusChallenge.postman_collection.json)** that you can use to validate the endpoints.
+Here I have a **[Postman Collection](https://github.com/rafaeltavares91/quero-ser-clickbus/blob/master/testes/backend-developer/solution/place/src/main/resources/static/ClickBusChallenge.postman_collection.json)** that you can use to validate the endpoints. To use it, copy this file and paste it on **[Postman](https://www.getpostman.com/)**.
 
-## Available Routes 
+### Available Routes 
 
 | Routes                 | Description                      | HTTP Methods |
 |------------------------|----------------------------------|--------------|
